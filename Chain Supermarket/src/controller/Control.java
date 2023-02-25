@@ -125,9 +125,9 @@ public class Control {
 					io.readGraphicInt("Digite el stocck"),this.showSupplier(io.readGraphicShort("Digite el número de Rut del proveedor")),
 					this.showCategory(io.readGraphicInt("Digite el número de ID de la categoría")));		 
 			s.addProduct(p);
-			io.showGraphicMessage("Client generated");
+			io.showGraphicMessage("Product generated");
 		} else {
-			Exception e = new DuplicateException("Ya existe este empleado");
+			Exception e = new DuplicateException("Ya existe este producto");
 			io.showGraphicErrorMessage(e.getMessage());
 		}
 	}

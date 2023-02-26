@@ -6,6 +6,7 @@ import exceptions.DuplicateException;
 import exceptions.ValueNotFoundException;
 import model.Client;
 import model.Person;
+import model.Sale;
 import model.Supplier;
 import model.products.Category;
 import model.products.Product;
@@ -122,7 +123,7 @@ public class Control {
 			Product p = new Product();
 			p = new Product(id, io.readGraphicString("Digite el nombre del producto"),
 					io.readGraphicDouble("Digite el precio"), 
-					io.readGraphicInt("Digite el stocck"),this.showSupplier(io.readGraphicShort("Digite el número de Rut del proveedor")),
+					io.readGraphicInt("Digite el stock"),this.showSupplier(io.readGraphicShort("Digite el número de Rut del proveedor")),
 					this.showCategory(io.readGraphicInt("Digite el número de ID de la categoría")));		 
 			s.addProduct(p);
 			io.showGraphicMessage("Product generated");
@@ -137,7 +138,7 @@ public class Control {
 		if (s.findCategory(id)!=-1) {
 			s.category(s.findCategory(id));
 		}else {
-			Exception e=new ValueNotFoundException("No existe este empleado");
+			Exception e=new ValueNotFoundException("No existe este provedor");
 			io.showGraphicErrorMessage(e.getMessage());
 		}
 		return s.category(s.findCategory(id));
@@ -151,6 +152,28 @@ public class Control {
 			io.showGraphicErrorMessage(e.getMessage());
 		}
 		return person.supplier(person.findSupplier(rut));
+	}
+	
+
+	private ArrayList<Product> listProducts= new ArrayList<Product>();
+	public void saleRecord(int id) {
+		Product p = new Product();
+		int unidadesV;
+		for (int i = 0; i < listProducts.size(); i++) {
+			if (listProducts.get(i).getId() == id) {
+				unidadesV = io.readGraphicInt("Digite el numero de unidades que vendio");
+				if (unidadesV > p.getStock()) {
+					throw new RuntimeException("No hay suficiente stock del producto para realizar la venta.");
+				} else {
+					p.setStock(p.getStock() - unidadesV);
+				} 
+			} else {
+				throw new RuntimeException("el id no fue encontrado.");
+			}
+
+		}
+
+
 	}
 
 }

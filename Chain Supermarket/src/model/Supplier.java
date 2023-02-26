@@ -11,6 +11,14 @@ public class Supplier extends Person {
 	private ArrayList<Product> listProducts= new ArrayList<Product>();
 	private ArrayList<Category> listCategorys= new ArrayList<Category>();
 
+	
+	
+	public ArrayList<Product> getListProducts() {
+		return listProducts;
+	}
+	public void setListProducts(ArrayList<Product> listProducts) {
+		this.listProducts = listProducts;
+	}
 	public String getWebpage() {
 		return webPage;
 	}

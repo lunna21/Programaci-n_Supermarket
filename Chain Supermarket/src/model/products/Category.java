@@ -7,7 +7,7 @@ public class Category {
 	private int id;
 	private String name;
 	private String description;
-	private ArrayList<Product> listaEmpleados= new ArrayList<Product>();
+	private ArrayList<Product> listProducts= new ArrayList<Product>();
 	
 	public int getId() {
 		return id;
@@ -28,10 +28,10 @@ public class Category {
 		this.description = description;
 	}
 	public ArrayList<Product> getListaEmpleados() {
-		return listaEmpleados;
+		return listProducts;
 	}
 	public void setListaEmpleados(ArrayList<Product> listaEmpleados) {
-		this.listaEmpleados = listaEmpleados;
+		this.listProducts = listaEmpleados;
 	}
 	
 }

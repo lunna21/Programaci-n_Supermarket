@@ -154,14 +154,15 @@ public class Control {
 	}
 	
 
-	private ArrayList<Product> listProducts= new ArrayList<Product>();
+	
 	int countId;
 	public void saleRecord(int id) {
+		Supplier su = new Supplier();
 		Product p = new Product();
 		Sale s = new Sale();
 		int unidadesV;
-		for (int i = 0; i < listProducts.size(); i++) {
-			if (listProducts.get(i).getId() == id) {
+		for (int i = 0; i < su.getListProducts().size(); i++) {
+			if (su.getListProducts().get(i).getId() == id) {
 				unidadesV = io.readGraphicInt("Digite el numero de unidades que vendio");
 				if (unidadesV > p.getStock()) {
 					throw new RuntimeException("No hay suficiente stock del producto para realizar la venta.");

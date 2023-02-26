@@ -37,7 +37,7 @@ public class Control {
 					this.addProduct();
 					break;
 				case 4:
-					// this.modifyEmployee();
+					this.saleRecord(io.readGraphicInt("Ingrese el id del producto a vender"));
 					break;
 				case 5:
 					// this.showEmployee();
@@ -75,7 +75,6 @@ public class Control {
 		io.showGraphicMessage("Hasta Luego");
 
 	}
-
 
 
 	private void addSupllier() {
@@ -156,8 +155,10 @@ public class Control {
 	
 
 	private ArrayList<Product> listProducts= new ArrayList<Product>();
+	int countId;
 	public void saleRecord(int id) {
 		Product p = new Product();
+		Sale s = new Sale();
 		int unidadesV;
 		for (int i = 0; i < listProducts.size(); i++) {
 			if (listProducts.get(i).getId() == id) {
@@ -166,6 +167,8 @@ public class Control {
 					throw new RuntimeException("No hay suficiente stock del producto para realizar la venta.");
 				} else {
 					p.setStock(p.getStock() - unidadesV);
+					countId++;
+					s.setId(countId);
 				} 
 			} else {
 				throw new RuntimeException("el id no fue encontrado.");

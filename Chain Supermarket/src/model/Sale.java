@@ -60,6 +60,12 @@ public class Sale {
 		this.finalAmount = finalAmount;
 	}
 
+	@Override
+	public String toString() {
+		return "Sale [id=" + id + ", fecha=" + fecha + ", client=" + client + ", discount=" + discount
+				+ ", finalAmount=" + finalAmount + "]";
+	}
+
 	
 	
 }

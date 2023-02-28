@@ -3,12 +3,11 @@ package model.products;
 import java.util.ArrayList;
 
 public class Category {
-	
+
 	private int id;
 	private String name;
 	private String description;
-	private ArrayList<Product> listProducts= new ArrayList<Product>();
-	
+
 	public int getId() {
 		return id;
 	}
@@ -27,11 +26,13 @@ public class Category {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public ArrayList<Product> getListaEmpleados() {
-		return listProducts;
+
+	public Category() {
+
 	}
-	public void setListaEmpleados(ArrayList<Product> listaEmpleados) {
-		this.listProducts = listaEmpleados;
+	public Category(int id, String name, String description) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
 	}
-	
 }

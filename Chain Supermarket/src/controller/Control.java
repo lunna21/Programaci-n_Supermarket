@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import exceptions.DuplicateException;
 import exceptions.ValueNotFoundException;
@@ -80,8 +81,8 @@ public class Control {
 	private void addSupllier() {
 		short rut = io.readGraphicShort("Digite el Rut");
 		if (person.findSupplier(rut) == -1) {
-			Supplier s = new Supplier();
-			s = new Supplier(rut, io.readGraphicString("Digite un nombre"), io.readGraphicString("Digite un número"),
+			//			Supplier s = new Supplier();
+			Supplier s = new Supplier(rut, io.readGraphicString("Digite un nombre"), io.readGraphicString("Digite un número"),
 					io.readGraphicString("Digite su página web"));
 			person.addSupplier(s);
 			io.showGraphicMessage("Supplier generated");
@@ -108,7 +109,7 @@ public class Control {
 		int wichNumbers=io.readGraphicInt("Digite cuantos números desea agregar");
 		int cont=0;
 		ArrayList<String> listNumbers = new ArrayList<String>();
-		Client c= new Client();
+		//		Client c= new Client();
 		while (cont!=wichNumbers) {
 			listNumbers.add(io.readGraphicString("Digite el número "));
 			cont++;
@@ -123,8 +124,9 @@ public class Control {
 			p = new Product(id, io.readGraphicString("Digite el nombre del producto"),
 					io.readGraphicDouble("Digite el precio"), 
 					io.readGraphicInt("Digite el stock"),this.showSupplier(io.readGraphicShort("Digite el número de Rut del proveedor")),
-					this.showCategory(io.readGraphicInt("Digite el número de ID de la categoría")));		 
+					this.createCategory(io.readGraphicInt("Digite el número de ID de la categoría")));		 
 			s.addProduct(p);
+			io.showGraphicMessage(""+s.getListProducts());
 			io.showGraphicMessage("Product generated");
 		} else {
 			Exception e = new DuplicateException("Ya existe este producto");
@@ -132,37 +134,36 @@ public class Control {
 		}
 	}
 
-	private Category showCategory(int id) {
-		Supplier s =new Supplier();
-		if (s.findCategory(id)!=-1) {
-			s.category(s.findCategory(id));
+	private ArrayList<Category> createCategory(int id) {
+		Product p=new Product();
+		if (p.findCategory(id)==-1) {
+			Category c= new Category(id,io.readGraphicString("Digite el nombre de la categoría"),io.readGraphicString("Digite una descripción"));
+			p.addCategory(c);
 		}else {
-			Exception e=new ValueNotFoundException("No existe este provedor");
+			Exception e=new ValueNotFoundException("No existe esta categoría");
 			io.showGraphicErrorMessage(e.getMessage());
 		}
-		return s.category(s.findCategory(id));
+		return p.getListCategory();
 	}
 
 	private Supplier showSupplier(short rut) {
 		if (person.findSupplier(rut)!=-1) {
 			person.supplier(person.findSupplier(rut));
 		}else {
-			Exception e=new ValueNotFoundException("No existe este empleado");
+			Exception e=new ValueNotFoundException("No existe este proveedor");
 			io.showGraphicErrorMessage(e.getMessage());
 		}
 		return person.supplier(person.findSupplier(rut));
 	}
-	
 
-	
-	int countId;
 	public void saleRecord(int id) {
+		int countId = 0;
 		Supplier su = new Supplier();
 		Product p = new Product();
 		Sale s = new Sale();
 		int unidadesV;
 		for (int i = 0; i < su.getListProducts().size(); i++) {
-			if (su.getListProducts().get(i).getId() == id) {
+			if (su.findProduct(i) == id) {
 				unidadesV = io.readGraphicInt("Digite el numero de unidades que vendio");
 				if (unidadesV > p.getStock()) {
 					throw new RuntimeException("No hay suficiente stock del producto para realizar la venta.");
@@ -172,12 +173,9 @@ public class Control {
 					s.setId(countId);
 				} 
 			} else {
-				throw new RuntimeException("el id no fue encontrado.");
+				throw new RuntimeException("El id no fue encontrado.");
 			}
-
 		}
-
-
 	}
 
 }

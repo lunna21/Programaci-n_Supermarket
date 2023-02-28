@@ -64,7 +64,6 @@ public class Person {
 	
 	public Supplier supplier(int position) {
 		return listSuplliers.get(position);
-		
 	}
 
 	

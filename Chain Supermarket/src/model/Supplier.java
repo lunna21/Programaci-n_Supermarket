@@ -9,15 +9,16 @@ public class Supplier extends Person {
 
 	private String webPage;
 	private ArrayList<Product> listProducts= new ArrayList<Product>();
-	private ArrayList<Category> listCategorys= new ArrayList<Category>();
-
-	
 	
 	public ArrayList<Product> getListProducts() {
 		return listProducts;
 	}
 	public void setListProducts(ArrayList<Product> listProducts) {
 		this.listProducts = listProducts;
+	}
+	@Override
+	public String toString() {
+		return "Supplier [listProducts=" + listProducts + "]";
 	}
 	public String getWebpage() {
 		return webPage;
@@ -42,23 +43,11 @@ public class Supplier extends Person {
 		}
 		return position;
 	}
-	public int findCategory(int id) {
-		int position = -1;
-		for (Category category : listCategorys) {
-			if (id == category.getId()) {
-				position = listProducts.indexOf(category);
-			}
-		}
-		return position;
-	}
+
 	public void addProduct(Product p) {
 		listProducts.add(p);
-		
 	}
 
-	public Category category(int position) {
-		return listCategorys.get(position);
-	}
 	
 
 }

@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 
 import model.Person;
+import model.products.Product;
 
 public class Client extends Person {
 	private ArrayList<String> listNumbers = new ArrayList<String>();
@@ -21,10 +22,11 @@ public class Client extends Person {
 		this.listNumbers=listNumbers;
 	}
 	public Client (ArrayList<String> listNumbers) {
-		
 	}
 
 	public Client() {
 	}
-
+	public void addNumbers(String numbers) {
+		listNumbers.add(numbers);
+	}
 }

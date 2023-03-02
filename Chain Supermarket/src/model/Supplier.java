@@ -5,20 +5,24 @@ import java.util.ArrayList;
 import model.products.Product;
 import model.products.Category;
 
-public class Supplier extends Person {
-
+public class Supplier extends Person{
 	private String webPage;
 	private ArrayList<Product> listProducts= new ArrayList<Product>();
-	
+
+	public Supplier() {
+		this.listProducts=new ArrayList<>();
+	}
 	public ArrayList<Product> getListProducts() {
 		return listProducts;
 	}
 	public void setListProducts(ArrayList<Product> listProducts) {
 		this.listProducts = listProducts;
 	}
+
 	@Override
 	public String toString() {
-		return "Supplier [listProducts=" + listProducts + "]";
+		return "Supplier [webPage=" + webPage + ", listProducts=" + listProducts + ", getRut()=" + getRut()
+				+ ", Nombre=" + getName() + "]";
 	}
 	public String getWebpage() {
 		return webPage;
@@ -31,9 +35,14 @@ public class Supplier extends Person {
 		this.webPage=webPage;
 		// TODO Auto-generated constructor stub
 	}
-	public Supplier() {
+	public Supplier(short rut, String name, String number, String webPage,ArrayList<Product> listProducts) {
+		super(rut, name);
+		this.webPage=webPage;
+		this.listProducts=listProducts;
 		// TODO Auto-generated constructor stub
 	}
+
+
 	public int findProduct(int id) {
 		int position = -1;
 		for (Product product : listProducts) {
@@ -50,6 +59,6 @@ public class Supplier extends Person {
 		return listProducts.get(position);
 	}
 
-	
+
 
 }

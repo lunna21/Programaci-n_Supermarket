@@ -62,10 +62,7 @@ public class Sale {
 
 	@Override
 	public String toString() {
-		return "Sale [id=" + id + ", fecha=" + fecha + ", client=" + client + ", discount=" + discount
-				+ ", finalAmount=" + finalAmount + "]";
+		return "Sale [id=" + id + ", fecha=" + fecha + ", cliente=" + client.getName() + ", descuento=" + discount
+				+ ", Monto final=" + finalAmount + "]";
 	}
-
-	
-	
 }

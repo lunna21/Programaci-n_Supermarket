@@ -117,16 +117,14 @@ public class Control {
 		return listNumbers;
 	}
 	private void addProduct() {
-		int id = io.readGraphicInt("Digite el ID");
+		short id = io.readGraphicShort("Digite el ID del proveedor");
 		Supplier s = new Supplier(); 
-		if (s.findProduct(id) == -1) {
-			Product p = new Product();
-			p = new Product(id, io.readGraphicString("Digite el nombre del producto"),
-					io.readGraphicDouble("Digite el precio"), 
-					io.readGraphicInt("Digite el stock"),this.showSupplier(io.readGraphicShort("Digite el número de Rut del proveedor")),
-					this.createCategory(io.readGraphicInt("Digite el número de ID de la categoría")));		 
-			s.addProduct(p);
-			io.showGraphicMessage(""+s.getListProducts());
+		if (person.findSupplier(id)!=-1) {
+			 Product p = new Product(id, io.readGraphicString("Digite el nombre del producto"),
+					io.readGraphicDouble("Digite el precio"),
+					io.readGraphicInt("Digite el stock"),
+					this.createCategory((short) io.readGraphicInt("Digite el número de ID de la categoría")));		 
+			person.getListSuplliers().get(person.findSupplier(id)).addProduct(p);
 			io.showGraphicMessage("Product generated");
 		} else {
 			Exception e = new DuplicateException("Ya existe este producto");
@@ -134,20 +132,20 @@ public class Control {
 		}
 	}
 
-	private ArrayList<Category> createCategory(int id) {
+	private Category createCategory(short id) {
 		Product p=new Product();
-		if (p.findCategory(id)==-1) {
+		Supplier s=new Supplier();
+		if (s.product(s.findProduct(id)) != null) {
 			Category c= new Category(id,io.readGraphicString("Digite el nombre de la categoría"),io.readGraphicString("Digite una descripción"));
 			p.addCategory(c);
 		}else {
-			Exception e=new ValueNotFoundException("No existe esta categoría");
-			io.showGraphicErrorMessage(e.getMessage());
+			io.showGraphicMessage("Ha seleccionado la categoría"+p.getListCategory().get(p.findCategory(id)));
 		}
-		return p.getListCategory();
+		return p.getListCategory().get(p.findCategory(id));
 	}
 
 	private Supplier showSupplier(short rut) {
-		if (person.findSupplier(rut)!=-1) {
+		if (person.findSupplier(rut)==-1) {
 			person.supplier(person.findSupplier(rut));
 		}else {
 			Exception e=new ValueNotFoundException("No existe este proveedor");

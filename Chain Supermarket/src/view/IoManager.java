@@ -1,8 +1,11 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
+
+import model.products.Product;
 
 public class IoManager {
 
@@ -142,6 +145,14 @@ public class IoManager {
 						"6. SALIDA \n"
 			  			);
 		return readGraphicInt(menuText);
+	}
+
+	public void showGraphicArrayString(ArrayList<Product> listProducts) {
+		String show="";
+		for (int i=0; i<listProducts.size();i++)
+			show+=listProducts.get(i)+"\n";
+		JOptionPane.showMessageDialog(null, show);
+		
 	}
 	
 	

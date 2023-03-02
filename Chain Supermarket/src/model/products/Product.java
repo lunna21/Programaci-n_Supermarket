@@ -54,13 +54,12 @@ public class Product {
 	public Product() {
 		// TODO Auto-generated constructor stub
 	}
-	public Product(int id, String name, double price, int stock, Supplier suplier, ArrayList<Category> listCategory) {
+	public Product(int id, String name, double price, int stock,Category category) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.stock = stock;
-		this.suplier = suplier;
-		this.listCategory = listCategory;
+		this.category = category;
 	}
 	
 	public int findCategory(int id) {
@@ -78,10 +77,11 @@ public class Product {
 	public Category category(int position) {
 		return listCategory.get(position);
 	}
-
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", stock=" + stock + "]";
+		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", stock=" + stock + ", suplier=" + suplier.getName()
+				+ ", category=" + category + ", listCategory=" + listCategory.get(getId()) + "]";
 	}
+
 
 }

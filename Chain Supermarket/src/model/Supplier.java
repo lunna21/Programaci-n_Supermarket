@@ -43,9 +43,11 @@ public class Supplier extends Person {
 		}
 		return position;
 	}
-
 	public void addProduct(Product p) {
 		listProducts.add(p);
+	}
+	public Product product(int position) {
+		return listProducts.get(position);
 	}
 
 	

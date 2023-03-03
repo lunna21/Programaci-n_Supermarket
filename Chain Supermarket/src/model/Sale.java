@@ -8,7 +8,6 @@ public class Sale {
 	private double finalAmount;
 	
 	public Sale() {
-		
 	}
 	
 	public Sale(int id, String fecha, Client client, double discount, double finalAmount) {
@@ -23,46 +22,37 @@ public class Sale {
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	public String getFecha() {
 		return fecha;
 	}
-
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
-
 	public Client getClient() {
 		return client;
 	}
-
 	public void setClient(Client client) {
 		this.client = client;
 	}
-
 	public double getDiscount() {
 		return discount;
 	}
-
 	public void setDiscount(double discount) {
 		this.discount = discount;
 	}
-
 	public double getFinalAmount() {
 		return finalAmount;
 	}
-
 	public void setFinalAmount(double finalAmount) {
 		this.finalAmount = finalAmount;
 	}
 
 	@Override
 	public String toString() {
-		return "Sale [id=" + id + ", fecha=" + fecha + ", cliente=" + client.getName() + ", descuento=" + discount
-				+ ", Monto final=" + finalAmount + "]";
+		return "Sale [Id=" + id + ", Date=" + fecha + ", Client=" + client.getName() + ", Discount=" + discount
+				+ ", finalAmount=" + finalAmount + "]";
 	}
 }

@@ -1,15 +1,10 @@
 package controller;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import exceptions.DuplicateException;
 import exceptions.ValueNotFoundException;
 import model.Client;
-import model.Person;
-import model.Sale;
 import model.Sql;
 import model.Supplier;
 import model.products.Category;
@@ -17,11 +12,11 @@ import model.products.Product;
 import view.IoManager;
 
 public class Control {
-	private IoManager io;
-	private Person person = new Person();
-	private Sql sql =new Sql() ;
-	private Supplier supplier=new Supplier() ;
-	private Product product=new Product();
+	IoManager io;
+	Sql sql =new Sql() ;
+	Supplier supplier=new Supplier() ;
+	Product product=new Product();
+	Category category=new Category();
 	
 
 	public Control() {
@@ -35,10 +30,11 @@ public class Control {
 		listNumbers.add("313245679");
 		Client c=new Client((short) 1,"Karina",listNumbers);
 		sql.addClient(c);
-		ArrayList<Category> listCategory = new ArrayList<Category>();
-		Category ca=new Category(1,"Alimentos","alimentos saludables");
-		listCategory.add(ca);
+		category=new Category(1,"Alimentos","alimentos saludables");
+		sql.addCategory(category);
 		ArrayList<Product> listProducts = new ArrayList<Product>();
+		product=new Product(1,"Papas",200,20);
+		listProducts.add(product);
 		Supplier s=new Supplier((short) 1,"Lunna","3137065045","lunna.com",listProducts);
 		sql.addSupplier(s);
 		do {
@@ -50,48 +46,31 @@ public class Control {
 					break;
 				case 2:
 					this.addClient();
+					
 					break;
 				case 3:
 					this.addProduct();
-					this.createCategory(io.readGraphicInt("Digite el ID del Producto"));
 					break;
 				case 4:
 //					this.saleRecord(io.readGraphicInt("Ingrese el id del producto a vender"));
 					break;
 				case 5:
-					// this.showEmployee();
+//Ver las ventas totales
 					break;
 				case 6:
-					// this.showAllEmployees();
 					break;
-				case 7:
-					// this.liquidar();
-					break;
-				case 8:
-					// this.readEmployeeListNews();
-					// io.showGraphicMessage(""+business.sizeArrayList());
-					// io.showGraphicMessage(""+business.findEmployee(18));
-					// io.showGraphicMessage(business.arrayListToArray());
-					//
-					break;
-				case 9:
-					// io.showGraphicArrayStringInLine(business.mySplit(',', "10,Hugo,25000"));
-					// business.ordenamientoBurbuja();
-					// io.showGraphicMessage(business.showAllEmployee());
-					// this.addEmployee();
-					// business.ordenamientoBurbuja();
-					// io.showGraphicMessage(business.showAllEmployee());
-					break;
+					
 				default:
-					io.showGraphicMessage("¡Ha seleccionado una Opcion Invalida!");
+					io.showGraphicMessage("You have selected an invalid option!");
 
 					break;
 				}
 			} catch (NumberFormatException e) {
-				io.showGraphicErrorMessage("Debe ingresar un numero entero");
+				io.showGraphicErrorMessage("You must enter an intege");
+				io.showGraphicErrorMessage(e.getMessage());
 			}
 		} while (opcion != 6);
-		io.showGraphicMessage("Hasta Luego");
+		io.showGraphicMessage("See you later");
 
 	}
 
@@ -103,6 +82,7 @@ public class Control {
 					io.readGraphicString("Digite su página web"));
 			sql.addSupplier(s);
 			io.showGraphicMessage("Supplier generated");
+			io.showGraphicMessage(s.toString());
 		} else {
 			Exception e = new DuplicateException("Ya existe este proveedor");
 			io.showGraphicErrorMessage(e.getMessage());
@@ -116,8 +96,9 @@ public class Control {
 			c = new Client(rut, io.readGraphicString("Digite un nombre"),this.whichNumbers());
 			sql.addClient(c);
 			io.showGraphicMessage("Client generated");
+			io.showGraphicMessage(c.toString());
 		} else {
-			Exception e = new DuplicateException("Ya existe este empleado");
+			Exception e = new DuplicateException("Ya existe este cliente");
 			io.showGraphicErrorMessage(e.getMessage());
 		}
 	}
@@ -137,91 +118,43 @@ public class Control {
 		short rut = io.readGraphicShort("Digite el Rut del proveedor");
 		if (sql.findSupplier(rut)!=-1) {
 			int id=io.readGraphicInt("Digite el ID del producto");
-			 product = new Product(id, io.readGraphicString("Digite el nombre del producto"),
-					 					 io.readGraphicDouble("Digite el precio"),
-					                     io.readGraphicInt("Digite el stock"));
-			sql.getListSuplliers().get(sql.findSupplier(rut)).addProduct(product);
-			System.out.println(sql.getListSuplliers()); 
-			io.showGraphicMessage("Product generated");
+			if (sql.getListSuplliers().get(sql.findSupplier(rut)).findProduct(id)==-1) {
+				product = new Product(id, 
+						 			   io.readGraphicString("Digite el nombre del producto"),
+						 			   io.readGraphicDouble("Digite el precio"),
+						               io.readGraphicInt("Digite el stock"));
+				sql.getListSuplliers().get(sql.findSupplier(rut)).addProduct(product);
+				io.showGraphicMessage("Product generated");
+				this.insertCategory(id,rut);
+				io.showGraphicMessage(product.toString());
+			} else {
+				Exception e = new DuplicateException("Ya existe este producto");
+				io.showGraphicErrorMessage(e.getMessage());
+			}
 		} else {
-			Exception e = new DuplicateException("No existe este proveedor por tanto no puedo crear el producto");
+			Exception e = new ValueNotFoundException("No existe este proveedor por tanto no puedo crear el producto");
 			io.showGraphicErrorMessage(e.getMessage());
 		}
 	}
 
-	private void createCategory(int idP) {
-		if (supplier.findProduct(idP)==-1) {
-			int id=io.readGraphicInt("Digite el ID de la Categoría");
-			if (sql.findCategory(id)==-1) {
-				Category c=new Category(io.readGraphicInt("Digite el ID de la Categoría"),io.readGraphicString("Nombre"),io.readGraphicString("Descripcion"));
-				sql.addCategory(c);
-				c.addProduct(supplier.getListProducts().get(supplier.findProduct(idP)));
+	private void insertCategory(int id,short rut) {
+		Supplier s=sql.getListSuplliers().get(sql.findSupplier(rut));
+		product=s.getListProducts().get(s.findProduct(id));
+		if (product.getId()!=-1) {
+			int idC=io.readGraphicInt("Digite el ID de la Categoría");
+			if (sql.findCategory(idC)==-1) {
+				category=new Category(idC,
+										io.readGraphicString("Nombre"),
+										io.readGraphicString("Descripcion"));
+				sql.addCategory(category);
+				sql.getListCategory().get(sql.findCategory(idC)).addProduct(product);
 			} else {
-				sql.getListCategory().get(sql.findCategory(id)).addProduct(supplier.getListProducts().get(supplier.findProduct(idP)));;
+				sql.getListCategory().get(sql.findCategory(idC)).addProduct(product);
 			}
 		}else {
-			Exception e = new DuplicateException("No existe este producto");
+			Exception e = new ValueNotFoundException("No  existe este producto");
 			io.showGraphicErrorMessage(e.getMessage());
 		}
 	}
 
-	private Client showClient(short rut) {
-		int positionClient = sql.findClient(rut);
-		if (positionClient != -1) {
-			sql.getListClients().get(positionClient);
-		} else {
-			Exception e = new ValueNotFoundException("No existe este cliente");
-			io.showGraphicErrorMessage(e.getMessage());
-		}
-		return sql.getListClients().get(positionClient);
-	}
-
-	
-//	private Supplier showSupplier(short rut) {
-//		if (sql.findSupplier(rut)==-1) {
-//			.supplier(sql.findSupplier(rut));
-//		}else {
-//			Exception e=new ValueNotFoundException("No existe este proveedor");
-//			io.showGraphicErrorMessage(e.getMessage());
-//		}
-//		return sql.supplier(sql.findSupplier(rut));
-//	}
-//
-//	public void saleRecord(int id) {
-//		Supplier su = this.showSupplier(io.readGraphicShort("Digite el nÃºmero de Rut del proveedor"));
-//		Client c = this.showClient(io.readGraphicShort("Digite el nÃºmero de Rut del Cliente"));
-//		Product p = this.showProduct(su, id);
-//
-//		Sale s;
-//		int uniSold = io.readGraphicInt("Digite el numero de unidades que vendio");
-//
-//		if (uniSold > p.getStock()) {
-//			throw new RuntimeException("No hay suficiente stock del producto para realizar la venta.");
-//		} else {
-//			p.setStock(p.getStock() - uniSold);
-//			double discount = io.readGraphicDouble("Ingrese el descuento porcentual (1-100): ");
-//			double totalMount = (double) p.getPrice() * uniSold * (discount/100);
-//			if(su != null && c != null && p != null) {
-//				s = new Sale(sales.size(), this.getDate(), c, discount, totalMount);
-//				this.sales.add(s);
-//				io.showGraphicMessage((s.toString()));
-//			} else {
-//				io.showGraphicMessage("Algo salio mal.");
-//			}
-//		}
-//
-//
-//	}
-//
-//
-//	public String getDate(){
-//        String format = "yyyy-MM-dd HH:mm:ss";
-//        DateTimeFormatter formateador = DateTimeFormatter.ofPattern(format);
-//        LocalDateTime date = LocalDateTime.now();
-//        return formateador.format(date);
-//        
-//        //Para llamar en el control
-//        //String fechayHora = fecha();
-//        //syso: fecha y hora + fechayhora
-//        }
 }

@@ -1,56 +1,11 @@
 package view;
 
-import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
 import model.products.Product;
 
 public class IoManager {
-
-	//atributtes
-	private Scanner scanner;
-
-	public IoManager() {
-		scanner= new Scanner(System.in);
-	}
-
-	public char readChar(String menssage) {
-		this.showMenssage(menssage);
-		return scanner.next().charAt(0);
-	}
-
-	public String readString(String menssage) {
-		this.showMenssage(menssage);
-		scanner.nextLine();
-		return scanner.nextLine();
-	}
-
-	public short readShort(String menssage) {
-		this.showMenssage(menssage);
-		return scanner.nextShort();
-	}
-
-	public int readInt(String menssage) {
-		this.showMenssage(menssage);
-		return scanner.nextInt();
-	}
-
-	public long readLong(String menssage) {
-		this.showMenssage(menssage);
-		return scanner.nextLong();
-	}
-
-	public double readDouble(String menssage) {
-		this.showMenssage(menssage);
-		return scanner.nextDouble();
-	}
-	public float readFloat(String menssage) {
-		this.showMenssage(menssage);
-		return scanner.nextFloat();
-	}
-
 
 	public void showMenssage (String message) {
 		System.out.println(message);
@@ -133,31 +88,7 @@ public class IoManager {
 						"6. Salir"
 			  			);
 		return readGraphicInt(menuText);
-	}
-	public int readMenuModify(){
-		String menuText = 
-						("Bienvenido, elige una opción a modificar \n"+
-						"1. ID \n"+
-						"2. NOMBRE\n"+ 
-						"3. SALARIO\n"+
-						"4. FECHA DE CONTRATACIÓN\n"+
-						"5. FECHA DE NACIMIENTO\n"+
-						"6. SALIDA \n"
-			  			);
-		return readGraphicInt(menuText);
-	}
-
-	public void showGraphicArrayString(ArrayList<Product> listProducts) {
-		String show="";
-		for (int i=0; i<listProducts.size();i++)
-			show+=listProducts.get(i)+"\n";
-		JOptionPane.showMessageDialog(null, show);
-		
-	}
-	
-	
-	
-	
+	}	
 	
 
 }

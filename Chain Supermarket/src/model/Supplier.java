@@ -1,16 +1,38 @@
 package model;
 
 import java.util.ArrayList;
-
 import model.products.Product;
-import model.products.Category;
 
 public class Supplier extends Person{
+	private String number;
 	private String webPage;
 	private ArrayList<Product> listProducts= new ArrayList<Product>();
 
 	public Supplier() {
-		this.listProducts=new ArrayList<>();
+	}
+	public Supplier(short rut, String name, String number, String webPage) {
+		super(rut, name);
+		this.number=number;
+		this.webPage=webPage;
+	}
+	public Supplier(short rut, String name, String number, String webPage,ArrayList<Product> listProducts) {
+		super(rut, name);
+		this.webPage=webPage;
+		this.number=number;
+		this.listProducts=listProducts;
+		// TODO Auto-generated constructor stub
+	}
+	public String getWebpage() {
+		return webPage;
+	}
+	public void setWebpage(String webpage) {
+		this.webPage = webpage;
+	}
+	public String getNumber() {
+		return number;
+	}
+	public void setNumber(String number) {
+		this.number = number;
 	}
 	public ArrayList<Product> getListProducts() {
 		return listProducts;
@@ -19,30 +41,9 @@ public class Supplier extends Person{
 		this.listProducts = listProducts;
 	}
 
-	@Override
-	public String toString() {
-		return "Supplier [webPage=" + webPage + ", listProducts=" + listProducts + ", getRut()=" + getRut()
-				+ ", Nombre=" + getName() + "]";
+	public void addProduct(Product p) {
+		listProducts.add(p);
 	}
-	public String getWebpage() {
-		return webPage;
-	}
-	public void setWebpage(String webpage) {
-		this.webPage = webpage;
-	}
-	public Supplier(short rut, String name, String number, String webPage) {
-		super(rut, name);
-		this.webPage=webPage;
-		// TODO Auto-generated constructor stub
-	}
-	public Supplier(short rut, String name, String number, String webPage,ArrayList<Product> listProducts) {
-		super(rut, name);
-		this.webPage=webPage;
-		this.listProducts=listProducts;
-		// TODO Auto-generated constructor stub
-	}
-
-
 	public int findProduct(int id) {
 		int position = -1;
 		for (Product product : listProducts) {
@@ -52,12 +53,12 @@ public class Supplier extends Person{
 		}
 		return position;
 	}
-	public void addProduct(Product p) {
-		listProducts.add(p);
+	@Override
+	public String toString() {
+		return "Supplier [Name= "+getName()+", Rut= " + getRut()+", Number= " + number + ", WebPage=" + webPage 
+						+ ", listProducts=" + getListProducts() + "]";
 	}
-	public Product product(int position) {
-		return listProducts.get(position);
-	}
+
 
 
 

@@ -2,19 +2,28 @@ package model;
 
 public class Sale {
 	private int id;
-	private String fecha;
+	private String date;
 	private Client client;
 	private double discount;
 	private double finalAmount;
 	
 	public Sale() {
+		
 	}
 	
-	public Sale(int id, String fecha, Client client, double discount, double finalAmount) {
+	public Sale(int id, String date, Client client, double discount, double finalAmount) {
 		super();
 		this.id = id;
-		this.fecha = fecha;
+		this.date = date;
 		this.client = client;
+		this.discount = discount;
+		this.finalAmount = finalAmount;
+	}
+	public Sale(int id, String date, String name, double discount, double finalAmount) {
+		super();
+		this.id = id;
+		this.date = date;
+		name = name;
 		this.discount = discount;
 		this.finalAmount = finalAmount;
 	}
@@ -22,37 +31,46 @@ public class Sale {
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getFecha() {
-		return fecha;
+
+	public String getDate() {
+		return date;
 	}
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
+
+	public void setDate(String fecha) {
+		this.date = fecha;
 	}
+
 	public Client getClient() {
 		return client;
 	}
+
 	public void setClient(Client client) {
 		this.client = client;
 	}
+
 	public double getDiscount() {
 		return discount;
 	}
+
 	public void setDiscount(double discount) {
 		this.discount = discount;
 	}
+
 	public double getFinalAmount() {
 		return finalAmount;
 	}
+
 	public void setFinalAmount(double finalAmount) {
 		this.finalAmount = finalAmount;
 	}
 
 	@Override
 	public String toString() {
-		return "Sale [Id=" + id + ", Date=" + fecha + ", Client=" + client.getName() + ", Discount=" + discount
-				+ ", finalAmount=" + finalAmount + "]";
+		return  id +","+ date +","+ client.getName()+"," + discount
+				+ "," + finalAmount;
 	}
 }

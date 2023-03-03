@@ -3,7 +3,6 @@ package view;
 
 import javax.swing.JOptionPane;
 
-import model.products.Product;
 
 public class IoManager {
 
@@ -81,11 +80,12 @@ public class IoManager {
 		String menuText = 
 						("Bienvenido, elige una opción\n"+
 						"1. Crear proveedor\n"+
-						"2. Crear cliente\n"+ 
-						"3. Crear producto\n"+
-						"4. Registar venta\n"+
-						"5. Mostrar historial de ventas totales\n"+  
-						"6. Salir"
+						"2. Crear cliente\n"+
+						"3. Cargar categorías existentes\n"+
+						"4. Crear producto\n"+
+						"5. Registar venta\n"+
+						"6. Mostrar historial de ventas totales\n"+  
+						"7. Salir"
 			  			);
 		return readGraphicInt(menuText);
 	}	

@@ -1,13 +1,11 @@
 package model.products;
 
-import model.Sql;
 
 public class Product {
 	private int id;
 	private String name;
 	private double price;
 	private int stock;
-	private Sql sql;
 	
 	public Product() {
 		// TODO Auto-generated constructor stub
@@ -46,7 +44,7 @@ public class Product {
 	
 	@Override
 	public String toString() {
-		return "Product [Id=" + id + ", Name=" + name + ", Price=" + price + ", Stock=" + stock +", Category" +sql.category()+ "]";
+		return "[Id=" + id + ", Name=" + name + ", Price=" + price + ", Stock=" + stock+"]";
 	}
 
 

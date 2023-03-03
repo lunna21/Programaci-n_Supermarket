@@ -53,10 +53,14 @@ public class Supplier extends Person{
 		}
 		return position;
 	}
+    public Product product(int position) {
+        return listProducts.get(position);
+    }
+
 	@Override
 	public String toString() {
-		return "Supplier [Name= "+getName()+", Rut= " + getRut()+", Number= " + number + ", WebPage=" + webPage 
-						+ ", listProducts=" + getListProducts() + "]";
+		return "Supplier [" +super.toString() + ", Number=" + number + ", WebPage=" + webPage+ 
+			              ", ListProducts" + getListProducts() + "]"+"\n";
 	}
 
 

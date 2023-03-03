@@ -1,9 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import model.products.Category;
 
 public abstract class Person {
 	private short rut;
@@ -30,7 +26,7 @@ public abstract class Person {
 	}
 	@Override
 	public String toString() {
-		return "Person [Rut=" + rut + ", Name=" + name + "]";
+		return "Rut=" + rut + ", Name=" + name;
 	}
 
 	

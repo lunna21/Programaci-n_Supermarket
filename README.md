@@ -1,3 +1,3 @@
 # Programación II Taller
 
-### Proyecto final.
+### Proyecto final (Chain Supermarket).

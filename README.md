@@ -1,4 +1,4 @@
-# Programaci-n_II_Taller
+# Programación II Taller
 
 ### Supermarket chain creating suppliers, customers, products and sales
 

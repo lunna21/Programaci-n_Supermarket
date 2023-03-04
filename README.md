@@ -1,3 +1,3 @@
 # Programaci-n_II_Taller
 
-Supermarket chain creating vendors, customers, products and sales
+Supermarket chain creating suppliers, customers, products and sales

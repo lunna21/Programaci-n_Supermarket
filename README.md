@@ -1,5 +1,5 @@
 # Programaci-n_II_Taller
 
-Supermarket chain creating suppliers, customers, products and sales
+#Supermarket chain creating suppliers, customers, products and sales
 
-# jj
+Anteriormente estabamos trabajando en este repositorio pero decidimos cambiarlo https://github.com/Ronaldmolinares/Programaci-n_II_Taller.git

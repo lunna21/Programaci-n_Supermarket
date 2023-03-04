@@ -1,3 +1,3 @@
-# Programaci-n_II_Taller
+# Programación II Taller
 
 ### Proyecto final.

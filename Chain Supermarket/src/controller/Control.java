@@ -3,7 +3,6 @@ package controller;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
 import exceptions.DuplicateException;
 import exceptions.ValueNotFoundException;
 import model.Address;
@@ -22,9 +21,9 @@ public class Control {
 	Supplier supplier=new Supplier() ;
 	Product product=new Product();
 	Category category=new Category();
-	MyFile f =new MyFile("C:\\Users\\pc\\Desktop\\UPTC\\TERCER SEMESTRE\\PROGRAMACIÓN II\\Chain Supermarket\\src\\persistence\\listcategorydat.txt");
-	MyFile j =new MyFile("C:\\Users\\pc\\Desktop\\UPTC\\TERCER SEMESTRE\\PROGRAMACIÓN II\\Chain Supermarket\\src\\persistence\\categories.txt");
-	MyFile k =new MyFile("C:\\Users\\pc\\Desktop\\UPTC\\TERCER SEMESTRE\\PROGRAMACIÓN II\\Chain Supermarket\\src\\persistence\\bills.txt");
+	MyFile f =new MyFile("src/persistence/listcategorydat.txt");
+	MyFile j =new MyFile("src/persistence/categories.txt");
+	MyFile k =new MyFile("src/persistence/bills.txt");
 
 	public Control() {
 		io = new IoManager();
@@ -32,22 +31,20 @@ public class Control {
 
 	public void init() {
 		int opcion = 0;
-		//		ArrayList<String> listNumbers = new ArrayList<String>();
-		//		listNumbers.add("3137065045");
-		//		listNumbers.add("313245679");
-		//		Address a=new Address("TUNJA","PARAÍSO","CALLE","12","CLL",18,65);
-		//		Client c=new Client((short) 1,"Karina",listNumbers,a);
-		//		System.out.println(c);
-		//		sql.addClient(c);
-		//		category=new Category(1,"Alimentos","alimentos saludables");
-		//		sql.addCategory(category);
-				ArrayList<Product> listProducts = new ArrayList<Product>();
-				product=new Product(1,"Papas",200,20);
-				listProducts.add(product);
-//				Supplier s=new Supplier((short) 1,"Lunna","3137065045","lunna.com");
-//				sql.addSupplier(s);
-		//		System.out.println();
-
+		ArrayList<String> listNumbers = new ArrayList<String>();
+		listNumbers.add("3137065045");
+		listNumbers.add("313245679");
+		Address a=new Address("TUNJA","PARAÍSO","CALLE","12","CLL",18,65);
+		Client c=new Client((short) 1,"Karina",listNumbers,a);
+		System.out.println(c);
+		sql.addClient(c);
+		category=new Category(1,"Alimentos","alimentos saludables");
+		sql.addCategory(category);
+		ArrayList<Product> listProducts = new ArrayList<Product>();
+		product=new Product(1,"Papas",200,20);
+		listProducts.add(product);
+		Supplier s=new Supplier((short) 1,"Lunna","3137065045","lunna.com");
+		sql.addSupplier(s);
 		do {
 			try {
 				opcion=io.readMenu();
@@ -89,14 +86,14 @@ public class Control {
 
 
 	private void showAllSale() {
-		MyFile j =new MyFile("C:\\Users\\pc\\Desktop\\UPTC\\TERCER SEMESTRE\\PROGRAMACIÓN II\\Chain Supermarket\\src\\persistence\\items.txt");
+		MyFile j =new MyFile("src/persistence/Recourse/items.txt");
+		this.readbills();
 		this.writeItems(j);
-		io.showGraphicMessage(sql.getListSales()+"\n ");
+		io.showGraphicMessage(sql.getListSales()+"\n");
 	}
 	public void readbills() {
 		k.openFile('r');
 		String cad;
-		Client client=new Client();
 		while ((cad=f.readRecord())!=null){
 			String []dataS = cad.split(",");
 			Sale s =new Sale(
@@ -127,23 +124,28 @@ public class Control {
 		}	}
 
 	private void addSupllier() {
-		MyFile j =new MyFile("C:\\Users\\pc\\Desktop\\UPTC\\TERCER SEMESTRE\\PROGRAMACIÓN II\\Chain Supermarket\\src\\persistence\\suppliers.txt");
-		short rut = io.readGraphicShort("Digite el Rut del Proveedor");
-		if (sql.findSupplier(rut) == -1) {
-			Supplier s = new Supplier(rut, io.readGraphicString("Digite un nombre"), io.readGraphicString("Digite un número"),
-					io.readGraphicString("Digite su página web"));
-			sql.addSupplier(s);
-			io.showGraphicMessage("Supplier generated");
-			io.showGraphicMessage(s.toString());
-			this.writeSupplier(j);
-		} else {
-			Exception e = new DuplicateException("Ya existe este proveedor");
+		try {
+			MyFile j =new MyFile("src\\persistence\\supplier.txt");
+			short rut = io.readGraphicShort("Digite el Rut del Proveedor");
+			if (sql.findSupplier(rut) == -1) {
+				Supplier s = new Supplier(rut, io.readGraphicString("Digite un nombre"), io.readGraphicString("Digite un número"),
+						io.readGraphicString("Digite su página web"));
+				sql.addSupplier(s);
+				io.showGraphicMessage("Supplier generated");
+				io.showGraphicMessage(s.toString());
+				this.writeSupplier(j);
+			} else {
+				Exception e = new DuplicateException("Ya existe este proveedor");
+				io.showGraphicErrorMessage(e.getMessage());
+			}
+		}catch (Exception em) {
+			Exception e = new ValueNotFoundException("Ya existe este proveedor");
 			io.showGraphicErrorMessage(e.getMessage());
 		}
 	}
 
 	private void addClient() {
-		MyFile j =new MyFile("C:\\Users\\pc\\Desktop\\UPTC\\TERCER SEMESTRE\\PROGRAMACIÓN II\\Chain Supermarket\\src\\persistence\\clients.txt");
+		MyFile j =new MyFile("src/persistence/clients.txt");
 		Address a=new Address();
 		short rut = io.readGraphicShort("Digite el Rut");
 		if (sql.findClient(rut) == -1) {
@@ -193,7 +195,7 @@ public class Control {
 				io.showGraphicMessage("Product generated");
 				this.insertCategory(id,rut);
 				io.showGraphicMessage(""+product);
-				this.writeProduct(f);
+				this.writeSupplier(f);
 			} else {
 				Exception e = new DuplicateException("Ya existe este producto");
 				io.showGraphicErrorMessage(e.getMessage());
@@ -208,45 +210,34 @@ public class Control {
 		MyFile f =new MyFile("C:\\Users\\pc\\Desktop\\UPTC\\TERCER SEMESTRE\\PROGRAMACIÓN II\\Chain Supermarket\\src\\persistence\\categories.txt");
 		Supplier s=sql.getListSuplliers().get(sql.findSupplier(rut));
 		product=s.getListProducts().get(s.findProduct(id));
-
-//		if (product.getId()!=-1) {
-			int idC=io.readGraphicInt("Digite el ID de la Categoría a la que quiere vincular su producto");
-			if (sql.findCategory(idC)==-1) {
-				category=new Category(idC,
-						io.readGraphicString("Nombre"),
-						io.readGraphicString("Descripcion"));
-				sql.addCategory(category);
-
-			} else {
-				Category category1=sql.getListCategory().get(sql.findCategory(idC));
-				if(sql.getListCategory().get(sql.findCategory(idC)).getListProducts().get(category1.findProduct(id)).getId()!=-1) {
-					sql.getListCategory().get(sql.findCategory(idC)).addProduct(product);
-				}else{
-					Exception e = new DuplicateException("No  existe este producto");
-					io.showGraphicErrorMessage(e.getMessage());
-				}
-				sql.getListCategory().get(sql.findCategory(idC)).addProduct(product);
-				this.writeCategory(f);
-			}}
-//		}else {
-//				Exception e = new ValueNotFoundException("No  existe este producto");
-//				io.showGraphicErrorMessage(e.getMessage());
-//			}
-//		}
-		private void writeCategory(MyFile f) {
-			try {
-				f.openFile('w');
-				String cad=sql.getListCategory().toString();
-				f.addRecord(cad);
-				f.closeFile();
-			}catch (Exception e) {
-				Exception em=new Exception("Ha ocurrido un error");
-				io.showGraphicErrorMessage(em.getMessage());
-			}	
+		int idC=io.readGraphicInt("Digite el ID de la Categoría a la que quiere vincular su producto");
+		if (sql.findCategory(idC)==-1) {
+			category=new Category(idC,
+					io.readGraphicString("Nombre"),
+					io.readGraphicString("Descripcion"));
+			sql.addCategory(category);
+			sql.category(sql.findCategory(idC)).addProduct(product);;
+			this.writeCategory(f);
+		} else {
+			sql.category(sql.findCategory(idC)).addProduct(product);
 		}
+	}
 
-		public void saleRecord(int id) {
-			MyFile f =new MyFile("C:\\Users\\pc\\Desktop\\UPTC\\TERCER SEMESTRE\\PROGRAMACIÓN II\\Chain Supermarket\\src\\persistence\\bills.txt");
+	private void writeCategory(MyFile f) {
+		try {
+			f.openFile('w');
+			String cad=sql.getListCategory().toString();
+			f.addRecord(cad);
+			f.closeFile();
+		}catch (Exception e) {
+			Exception em=new Exception("Ha ocurrido un error");
+			io.showGraphicErrorMessage(em.getMessage());
+		}	
+	}
+
+	public void saleRecord(int id) {
+		try {
+			MyFile f =new MyFile("c:/Temp/src/persistence/bills.txt");
 			int positionS = sql.findSupplier(io.readGraphicShort("Digite el numero de Rut del proveedor."));
 			int positionC = sql.findClient(io.readGraphicShort("Digite el numero del Rut del Cliente"));
 			int positionP;
@@ -279,99 +270,95 @@ public class Control {
 				sql.addSale(s);
 				io.showGraphicMessage((s.toString()));
 				this.writeBills(f);
-				/*if (su != null && c != null && p != null) {
-
-            } else {
-                io.showGraphicMessage("Algo salio mal.");
-            }*/
 			}
 
+		} catch (Exception e) {
+			io.showGraphicErrorMessage(e.getMessage());
 		}
-		private void writeBills(MyFile f) {
-			try {
-				f.openFile('w');
-				String cad=sql.getListSales().toString();
-				f.addRecord(cad);
-				f.closeFile();
-			}catch (Exception e) {
-				Exception em=new Exception("Ha ocurrido un error");
-				io.showGraphicErrorMessage(em.getMessage());
-			}	}
-
-		public String getDate() {
-			String format = "yyyy-MM-dd HH:mm:ss";
-			DateTimeFormatter formateador = DateTimeFormatter.ofPattern(format);
-			LocalDateTime date = LocalDateTime.now();
-			return formateador.format(date);
-		}
-
-
-		public void writeSupplier(MyFile j) {
-			try {
-				j.openFile('w');
-				String cad=sql.getListSuplliers().toString();
-				j.addRecord(cad);
-				j.closeFile();
-			}catch (Exception e) {
-				Exception em=new Exception("Ha ocurrido un error");
-				io.showGraphicErrorMessage(em.getMessage());
-			}
-		}
-		public void writeClient(MyFile j) {
-			try {
-				j.openFile('w');
-				String cad=sql.getListClients().toString();
-				j.addRecord(cad);
-				j.closeFile();
-			}catch (Exception e) {
-				Exception em=new Exception("Ha ocurrido un error");
-				io.showGraphicErrorMessage(em.getMessage());
-			}
-		}
-		public void writeProduct(MyFile j) {
-			try {
-				j.openFile('w');
-				String cad=sql.getListSuplliers().toString();
-				j.addRecord(cad);
-				j.closeFile();
-			}catch (Exception e) {
-				Exception em=new Exception("Ha ocurrido un error");
-				io.showGraphicErrorMessage(em.getMessage());
-			}
-		}
-		public void readCategoryList() {
-			f.openFile('r');
-			String cad;
-			while ((cad=f.readRecord())!=null){
-				String []dataCa = cad.split(",");
-				Category c =new Category(
-						Integer.parseInt(dataCa[0]),
-						dataCa[1],
-						dataCa[2]);
-				if (sql.findCategory(c.getId())==-1) {
-					sql.addCategory(c);
-					int count=0;
-					while(Integer.parseInt(dataCa[3])!=count) {
-						sql.getListCategory().get(sql.findCategory(c.getId())).getListProducts().add(this.splitProduct(dataCa[5+count]));
-						sql.getListSuplliers().get(sql.findSupplier(Short.parseShort(dataCa[4]))).addProduct(this.splitProduct(dataCa[5+count]));;
-						count++;
-					}
-					io.showGraphicMessage("Categoría generada");
-					io.showGraphicMessage(""+sql.getListCategory().get(sql.findCategory(c.getId())));
-				}else {
-					Exception em=new DuplicateException("Ya existe esta categoría");
-					io.showGraphicErrorMessage(em.getMessage());
-				}	
-			}
-		}
-		public Product splitProduct(String cad) {
-			String []product = cad.split("/");
-			Product p=new Product(Integer.parseInt(product[0]),
-					product[1],
-					Double.parseDouble(product[2]),
-					Integer.parseInt(product[3]));
-			return p;
-		}
-
 
 	}
+	private void writeBills(MyFile f) {
+		try {
+			f.openFile('w');
+			String cad=sql.getListSales().toString();
+			f.addRecord(cad);
+			f.closeFile();
+		}catch (Exception e) {
+			Exception em=new Exception("Ha ocurrido un error");
+			io.showGraphicErrorMessage(em.getMessage());
+		}	}
+
+	public String getDate() {
+		String format = "yyyy-MM-dd HH:mm:ss";
+		DateTimeFormatter formateador = DateTimeFormatter.ofPattern(format);
+		LocalDateTime date = LocalDateTime.now();
+		return formateador.format(date);
+	}
+	public void writeSupplier(MyFile j) {
+		try {
+			j.openFile('w');
+			String cad=sql.showSuppliers();
+			j.addRecord(cad);
+			j.closeFile();
+		}catch (Exception e) {
+			Exception em=new Exception("Ha ocurrido un error");
+			io.showGraphicErrorMessage(em.getMessage());
+		}
+	}
+	public void writeClient(MyFile j) {
+		try {
+			j.openFile('w');
+			String cad=sql.showClients();
+			j.addRecord(cad);
+		}catch (Exception em) {
+			em=new Exception("Ha ocurrido un error");
+			io.showGraphicErrorMessage(em.getMessage());
+		}
+	}
+	public void writeProduct(MyFile j) {
+		try {
+			j.openFile('w');
+			String cad="---------List of Products----------\n"+category.getListProducts();
+			j.addRecord(cad);
+			j.closeFile();
+		}catch (Exception e) {
+			Exception em=new Exception("Ha ocurrido un error");
+			io.showGraphicErrorMessage(em.getMessage());
+		}
+	}
+	public void readCategoryList() {
+		f.openFile('r');
+		String cad;
+		while ((cad=f.readRecord())!=null){
+			String []dataCa = cad.split(",");
+			Category c =new Category(
+					Integer.parseInt(dataCa[0]),
+					dataCa[1],
+					dataCa[2]);
+			if (sql.findCategory(c.getId())==-1) {
+				sql.addCategory(c);
+				int count=0;
+				while(Integer.parseInt(dataCa[3])!=count) {
+					sql.getListCategory().get(sql.findCategory(c.getId())).getListProducts().add(this.splitProduct(dataCa[5+count]));
+					sql.getListSuplliers().get(sql.findSupplier(Short.parseShort(dataCa[4]))).addProduct(this.splitProduct(dataCa[5+count]));;
+					count++;
+				}
+				io.showGraphicMessage("Categoría generada");
+				io.showGraphicMessage(""+sql.getListCategory().get(sql.findCategory(c.getId())));
+			}else {
+				Exception em=new DuplicateException("Ya existe esta categoría");
+				io.showGraphicErrorMessage(em.getMessage());
+			}	
+		}
+	}
+	public Product splitProduct(String cad) {
+		String []product = cad.split("/");
+		Product p=new Product(Integer.parseInt(product[0]),
+				product[1],
+				Double.parseDouble(product[2]),
+				Integer.parseInt(product[3]));
+		return p;
+	}
+
+
+}

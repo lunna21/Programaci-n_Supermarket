@@ -1,0 +1,4 @@
+--------------------------------------------------LIST OF CLIENTS--------------------------------------------------
+Client Rut=1, Name=Karina, ListNumbers=[3137065045, 313245679],  Address [City:TUNJA, Neighborhood:PARAÍSO CALLE-12-CLL-18-65]
+Client Rut=2, Name=2, ListNumbers=[2, 2],  Address [City:2, Neighborhood:2 2-2-2-2-2]
+

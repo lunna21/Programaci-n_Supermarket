@@ -68,8 +68,8 @@ public class Address {
 	}
 	@Override
 	public String toString() {
-		return "Address [City=" + city + ", Neighborhood=" + neighborhood + ", Type=" + type + ", NameOrNumberofType="
-				+ nameOrNumberofType + ", PrefixOrQuadrant=" + prefixOrQuadrant + ", GeneratingWayNumber="
-				+ generatingWayNumber + ", PlateNumber=" + plateNumber + "]";
+		return "Address [City:" + city + ", Neighborhood:" + neighborhood+" " + type + "-"
+				+ nameOrNumberofType + "-" + prefixOrQuadrant + "-"
+				+ generatingWayNumber + "-" + plateNumber +"]\n";
 	}
 }

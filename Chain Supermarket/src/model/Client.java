@@ -41,7 +41,7 @@ public class Client extends Person {
 
 	@Override
 	public String toString() {
-		return "Client [" + super.toString() + ", ListNumbers=" + listNumbers + ",  "+ adress.toString() + "]";
+		return "Client" + " "+super.toString() + ", ListNumbers=" + listNumbers + ",  "+ adress.toString();
 	}
 	
 }

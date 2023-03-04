@@ -82,9 +82,9 @@ public class Sql {
 //REVISAR CAMBIAR CLIENT
 	public int findSale(int id) {
 		int position = -1;
-		for (Sale client : listSales) {
-			if (id == client.getId()) {
-				position = listClients.indexOf(client);
+		for (Sale sale : listSales) {
+			if (id == sale.getId()) {
+				position = listClients.indexOf(sale);
 			}
 		}
 		return position;
@@ -99,6 +99,25 @@ public class Sql {
     public Category category(int position) {
         return listCategory.get(position);
     }
+    public String showClients() {
+		String salida="--------------------------------------------------LIST OF CLIENTS--------------------------------------------------"+
+					  "\n";
+		Iterator it = listClients.iterator(); 
+		while(it.hasNext()){
+			salida+=(it.next());
+		}
+		return salida;
+	}
+    public String showSuppliers() {
+		String salida="--------------------------------------------------LIST OF SUPPLIERS--------------------------------------------------"+
+					  "\n";
+		Iterator it = listSuplliers.iterator(); 
+		while(it.hasNext()){
+			salida+=(it.next());
+		}
+		return salida;
+	}
+    
     
     //Agregando historial
     

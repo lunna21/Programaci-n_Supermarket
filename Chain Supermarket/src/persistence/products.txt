@@ -1,0 +1,15 @@
+"--------------------------------------------------LIST OF PRODUCTS--------------------------------------------------
+
+
+Supplier [Rut=1, Name=lunna, Number=3123, WebPage=kdksw	
+[Id=1, Name=Papas, Price=1000.0, Stock=18, Id=2, Name=Libra de Arroz, Price=3000.0, Stock=20]]
+"--------------------------------------------------LIST OF PRODUCTS--------------------------------------------------
+
+
+Supplier [Rut=1, Name=lunna, Number=3123, WebPage=kdksw	
+[Id=1, Name=Papas, Price=1000.0, Stock=18, Id=2, Name=Libra de Arroz, Price=3000.0, Stock=20, Id=3, Name=Colombiana, Price=5000.0, Stock=16, Id=4, Name=Manzana-Postobon, Price=5000.0, Stock=10, Id=5, Name=SevenUp, Price=7000.0, Stock=21]]
+"--------------------------------------------------LIST OF PRODUCTS--------------------------------------------------
+
+
+Supplier [Rut=1, Name=lunna, Number=3123, WebPage=kdksw	
+[Id=1, Name=Papas, Price=1000.0, Stock=18, Id=2, Name=Libra de Arroz, Price=3000.0, Stock=20, Id=3, Name=Colombiana, Price=5000.0, Stock=16, Id=4, Name=Manzana-Postobon, Price=5000.0, Stock=10, Id=5, Name=SevenUp, Price=7000.0, Stock=21, Id=6, Name=Zanahoria, Price=3000.0, Stock=16, Id=7, Name=Lechuga, Price=4000.0, Stock=20, Id=8, Name=Brocoli, Price=6000.0, Stock=31]]

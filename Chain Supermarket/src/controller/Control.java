@@ -50,7 +50,7 @@ public class Control {
 						this.addProduct();
 						break;
 					case 5:
-						this.saleRecord(io.readGraphicInt("Ingrese el id del producto a vender"));
+						this.saleRecord();
 						break;
 					case 6:
 						this.showAllSale();
@@ -227,10 +227,12 @@ public class Control {
 		}
 	}
 
-	public void saleRecord(int id) {
+	public void saleRecord() {
 		try {
-			MyFile f = new MyFile("Chain Supermarket\\src\\persistence\\bills.txt");
 			int positionS = sql.findSupplier(io.readGraphicShort("Digite el numero de Rut del proveedor."));
+			int id = (io.readGraphicInt("Ingrese el id del producto a vender"));
+			MyFile f = new MyFile("Chain Supermarket\\src\\persistence\\bills.txt");
+
 			int positionC = sql.findClient(io.readGraphicShort("Digite el numero del Rut del Cliente"));
 			int positionP;
 

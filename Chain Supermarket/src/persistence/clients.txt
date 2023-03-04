@@ -1,0 +1,2 @@
+--------------------------------------------------LIST OF CLIENTS--------------------------------------------------
+Client [Rut=1, Name=lsdkn, ListNumbers=[121],  Address [City=213, Neighborhood=12, Type=321, NameOrNumberofType=123, PrefixOrQuadrant=123, GeneratingWayNumber=21, PlateNumber=231]]

@@ -30,21 +30,7 @@ public class Control {
 	}
 
 	public void init() {
-		int opcion = 0;
-		ArrayList<String> listNumbers = new ArrayList<String>();
-		listNumbers.add("3137065045");
-		listNumbers.add("313245679");
-		Address a=new Address("TUNJA","PARAÍSO","CALLE","12","CLL",18,65);
-		Client c=new Client((short) 1,"Karina",listNumbers,a);
-		System.out.println(c);
-		sql.addClient(c);
-		category=new Category(1,"Alimentos","alimentos saludables");
-		sql.addCategory(category);
-		ArrayList<Product> listProducts = new ArrayList<Product>();
-		product=new Product(1,"Papas",200,20);
-		listProducts.add(product);
-		Supplier s=new Supplier((short) 1,"Lunna","3137065045","lunna.com");
-		sql.addSupplier(s);
+		int opcion = 0;	
 		do {
 			try {
 				opcion=io.readMenu();
@@ -86,7 +72,7 @@ public class Control {
 
 
 	private void showAllSale() {
-		MyFile j =new MyFile("src/persistence/Recourse/items.txt");
+		MyFile j =new MyFile("src\\persistence\\items.txt");
 		this.readbills();
 		this.writeItems(j);
 		io.showGraphicMessage(sql.getListSales()+"\n");
@@ -115,7 +101,8 @@ public class Control {
 	private void writeItems(MyFile f) {
 		try {
 			f.openFile('w');
-			String cad=sql.getListSales().toString();
+			String cad="\"--------------------------------------------------LIST OF ITEMS--------------------------------------------------\"+\r\n"
+					   +"\n"+sql.getListSales().toString();
 			f.addRecord(cad);
 			f.closeFile();
 		}catch (Exception e) {
@@ -145,7 +132,7 @@ public class Control {
 	}
 
 	private void addClient() {
-		MyFile j =new MyFile("src/persistence/clients.txt");
+		MyFile j =new MyFile("src\\persistence\\clients.txt");
 		Address a=new Address();
 		short rut = io.readGraphicShort("Digite el Rut");
 		if (sql.findClient(rut) == -1) {
@@ -180,8 +167,8 @@ public class Control {
 		return listNumbers;
 	}
 	private void addProduct() {
-		MyFile f =new MyFile("C:\\Users\\pc\\Desktop\\UPTC\\TERCER SEMESTRE\\PROGRAMACIÓN II\\Chain Supermarket\\src\\persistence\\suppliers.txt");
-		MyFile j =new MyFile("C:\\Users\\pc\\Desktop\\UPTC\\TERCER SEMESTRE\\PROGRAMACIÓN II\\Chain Supermarket\\src\\persistence\\products.txt");
+		MyFile f =new MyFile("src\\persistence\\suppliers.txt");
+		MyFile j =new MyFile("src\\persistence\\products.txt");
 		short rut = io.readGraphicShort("Digite el Rut del proveedor");
 		if (sql.findSupplier(rut)!=-1) {
 			int id=io.readGraphicInt("Digite el ID del producto");
@@ -207,7 +194,7 @@ public class Control {
 	}
 
 	private void insertCategory(int id,short rut) {
-		MyFile f =new MyFile("C:\\Users\\pc\\Desktop\\UPTC\\TERCER SEMESTRE\\PROGRAMACIÓN II\\Chain Supermarket\\src\\persistence\\categories.txt");
+		MyFile f =new MyFile("src\\persistence\\categories.txt");
 		Supplier s=sql.getListSuplliers().get(sql.findSupplier(rut));
 		product=s.getListProducts().get(s.findProduct(id));
 		int idC=io.readGraphicInt("Digite el ID de la Categoría a la que quiere vincular su producto");
@@ -225,10 +212,10 @@ public class Control {
 
 	private void writeCategory(MyFile f) {
 		try {
-			f.openFile('w');
-			String cad=sql.getListCategory().toString();
-			f.addRecord(cad);
-			f.closeFile();
+			j.openFile('w');
+			String cad=sql.showCategories();
+			j.addRecord(cad);
+			j.closeFile();
 		}catch (Exception e) {
 			Exception em=new Exception("Ha ocurrido un error");
 			io.showGraphicErrorMessage(em.getMessage());
@@ -237,7 +224,7 @@ public class Control {
 
 	public void saleRecord(int id) {
 		try {
-			MyFile f =new MyFile("c:/Temp/src/persistence/bills.txt");
+			MyFile f =new MyFile("src\\persistence\\bills.txt");
 			int positionS = sql.findSupplier(io.readGraphicShort("Digite el numero de Rut del proveedor."));
 			int positionC = sql.findClient(io.readGraphicShort("Digite el numero del Rut del Cliente"));
 			int positionP;
@@ -280,7 +267,8 @@ public class Control {
 	private void writeBills(MyFile f) {
 		try {
 			f.openFile('w');
-			String cad=sql.getListSales().toString();
+			String cad="\"--------------------------------------------------LIST OF BILLS--------------------------------------------------\"+\r\n"
+					   +"\n"+sql.getListSales().toString();
 			f.addRecord(cad);
 			f.closeFile();
 		}catch (Exception e) {
@@ -310,6 +298,7 @@ public class Control {
 			j.openFile('w');
 			String cad=sql.showClients();
 			j.addRecord(cad);
+			j.closeFile();
 		}catch (Exception em) {
 			em=new Exception("Ha ocurrido un error");
 			io.showGraphicErrorMessage(em.getMessage());
@@ -318,7 +307,8 @@ public class Control {
 	public void writeProduct(MyFile j) {
 		try {
 			j.openFile('w');
-			String cad="---------List of Products----------\n"+category.getListProducts();
+			String cad="\"--------------------------------------------------LIST OF PRODUCTS--------------------------------------------------\"+\r\n"
+					   +"\n"+product.toString();
 			j.addRecord(cad);
 			j.closeFile();
 		}catch (Exception e) {
@@ -327,28 +317,33 @@ public class Control {
 		}
 	}
 	public void readCategoryList() {
-		f.openFile('r');
-		String cad;
-		while ((cad=f.readRecord())!=null){
-			String []dataCa = cad.split(",");
-			Category c =new Category(
-					Integer.parseInt(dataCa[0]),
-					dataCa[1],
-					dataCa[2]);
-			if (sql.findCategory(c.getId())==-1) {
-				sql.addCategory(c);
-				int count=0;
-				while(Integer.parseInt(dataCa[3])!=count) {
-					sql.getListCategory().get(sql.findCategory(c.getId())).getListProducts().add(this.splitProduct(dataCa[5+count]));
-					sql.getListSuplliers().get(sql.findSupplier(Short.parseShort(dataCa[4]))).addProduct(this.splitProduct(dataCa[5+count]));;
-					count++;
-				}
-				io.showGraphicMessage("Categoría generada");
-				io.showGraphicMessage(""+sql.getListCategory().get(sql.findCategory(c.getId())));
-			}else {
-				Exception em=new DuplicateException("Ya existe esta categoría");
-				io.showGraphicErrorMessage(em.getMessage());
-			}	
+		try {
+			f.openFile('r');
+			String cad;
+			while ((cad=f.readRecord())!=null){
+				String []dataCa = cad.split(",");
+				Category c =new Category(
+						Integer.parseInt(dataCa[0]),
+						dataCa[1],
+						dataCa[2]);
+				if (sql.findCategory(c.getId())==-1) {
+					sql.addCategory(c);
+					int count=0;
+					while(Integer.parseInt(dataCa[3])!=count) {
+						sql.getListCategory().get(sql.findCategory(c.getId())).getListProducts().add(this.splitProduct(dataCa[5+count]));
+						sql.getListSuplliers().get(sql.findSupplier(Short.parseShort(dataCa[4]))).addProduct(this.splitProduct(dataCa[5+count]));;
+						count++;
+					}
+					io.showGraphicMessage("Categoría generada");
+					io.showGraphicMessage(""+sql.getListCategory().get(sql.findCategory(c.getId())));
+				}else {
+					Exception em=new DuplicateException("Ya existe esta categoría");
+					io.showGraphicErrorMessage(em.getMessage());
+				}	
+			}
+		} catch (Exception e) {
+			e=new Exception("Ha ocurrido un error no existe un productor");
+			io.showGraphicErrorMessage(e.getMessage());
 		}
 	}
 	public Product splitProduct(String cad) {

@@ -6,11 +6,11 @@ public class Sale {
 	private Client client;
 	private double discount;
 	private double finalAmount;
-	
+
 	public Sale() {
-		
+
 	}
-	
+
 	public Sale(int id, String date, Client client, double discount, double finalAmount) {
 		super();
 		this.id = id;
@@ -19,11 +19,11 @@ public class Sale {
 		this.discount = discount;
 		this.finalAmount = finalAmount;
 	}
+
 	public Sale(int id, String date, String name, double discount, double finalAmount) {
 		super();
 		this.id = id;
 		this.date = date;
-		name = name;
 		this.discount = discount;
 		this.finalAmount = finalAmount;
 	}
@@ -70,7 +70,7 @@ public class Sale {
 
 	@Override
 	public String toString() {
-		return  id +","+ date +","+ client.getName()+"," + discount
+		return id + "," + date + "," + client.getName() + "," + discount
 				+ "," + finalAmount;
 	}
 }

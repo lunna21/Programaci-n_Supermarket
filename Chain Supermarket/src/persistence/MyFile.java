@@ -1,4 +1,5 @@
 package persistence;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -17,27 +18,27 @@ public class MyFile {
 		f = new File(nameFile);
 	}
 
-	public void openFile(char modo)	{
+	public void openFile(char modo) {
 		try {
-			//modo escritura "w" crea el archivo
-			if (modo=='w'){
-				fw = new FileWriter(f);
+			// modo escritura "w" crea el archivo
+			if (modo == 'w') {
+				fw = new FileWriter(f, true);
 				bw = new BufferedWriter(fw);
-			}
-			else{
-				//modo lectura "r" abre el archivo
+				bw.flush();
+			} else {
+				// modo lectura "r" abre el archivo
 				fr = new FileReader(f);
 				br = new BufferedReader(fr);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
+		}
 	}
 
-	//Almacena la cadena ingresada por parametro
-	public void addRecord(String cad){
-		if (bw!=null){
+	// Almacena la cadena ingresada por parametro
+	public void addRecord(String cad) {
+		if (bw != null) {
 			try {
 				bw.write(cad);
 				bw.newLine();
@@ -47,23 +48,25 @@ public class MyFile {
 			}
 		}
 	}
+
 	// Lee una línea del archivo
-	public String readRecord(){		  
-		String cad="";	
+	public String readRecord() {
+		String cad = "";
 		try {
-			cad= br.readLine();
+			cad = br.readLine();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return cad;		   
+		return cad;
 	}
-	// cierra archivo modo R/W	 
-	public void closeFile(){
+
+	// cierra archivo modo R/W
+	public void closeFile() {
 		try {
-			if (br!=null)
+			if (br != null)
 				br.close();
-			if (bw!=null)
+			if (bw != null)
 				bw.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

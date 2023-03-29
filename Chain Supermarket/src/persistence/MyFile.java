@@ -21,8 +21,9 @@ public class MyFile {
 		try {
 			//modo escritura "w" crea el archivo
 			if (modo=='w'){
-				fw = new FileWriter(f);
+				fw = new FileWriter(f,true);
 				bw = new BufferedWriter(fw);
+				bw.flush();
 			}
 			else{
 				//modo lectura "r" abre el archivo

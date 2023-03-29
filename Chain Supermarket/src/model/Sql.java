@@ -7,11 +7,12 @@ import model.products.Category;
 
 public class Sql {
 	private Category category;
+
 	private ArrayList<Supplier> listSuplliers = new ArrayList<Supplier>();
 	private ArrayList<Client> listClients = new ArrayList<Client>();
 	private ArrayList<Category>listCategory = new ArrayList<Category>();
     private ArrayList<Sale> listSales = new ArrayList<Sale>();
-
+    
 	public ArrayList<Supplier> getListSuplliers() {
 		return listSuplliers;
 	}
@@ -82,9 +83,9 @@ public class Sql {
 //REVISAR CAMBIAR CLIENT
 	public int findSale(int id) {
 		int position = -1;
-		for (Sale sale : listSales) {
-			if (id == sale.getId()) {
-				position = listClients.indexOf(sale);
+		for (Sale sal : listSales) {
+			if (id == sal.getId()) {
+				position = listClients.indexOf(sal);
 			}
 		}
 		return position;
@@ -109,25 +110,34 @@ public class Sql {
 		return salida;
 	}
     public String showSuppliers() {
-		String salida="--------------------------------------------------LIST OF SUPPLIERS--------------------------------------------------"+
-					  "\n";
+		String salida="";
 		Iterator it = listSuplliers.iterator(); 
 		while(it.hasNext()){
 			salida+=(it.next());
 		}
 		return salida;
 	}
-    
+    public String showCategories() {
+ 		String salida="--------------------------------------------------LIST OF CATEGORIES--------------------------------------------------"+
+ 					  "\n";
+ 		Iterator it = listCategory.iterator(); 
+ 		while(it.hasNext()){
+ 			salida+=(it.next());
+ 		}
+ 		return salida;
+ 	}
+
     
     //Agregando historial
     
     public String toString(){
     String info = "";
         for (Sale sale : listSales) {
-            info += "Id: " + sale.getId() + " Date: " + sale.getDate() + " Cliente: " + sale.getClient() + " descuento: " + sale.getDiscount() + " monto final: " + sale.getFinalAmount() + " \n";
+            info += "Id: " + sale.getId() + " Date: " + sale.getDate() + " Cliente: " + sale.getClient() + " Descuento: " + sale.getDiscount() + " monto final: " + sale.getFinalAmount() + " \n";
         }
         
         return info;
     }
+
 
 }

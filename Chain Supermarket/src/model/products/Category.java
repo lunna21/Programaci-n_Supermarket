@@ -2,6 +2,7 @@ package model.products;
 
 import java.util.ArrayList;
 
+
 public class Category {
 	private int id;
 	private String name;
@@ -53,11 +54,15 @@ public class Category {
 		}
 		return position;
 	}
-
 	@Override
 	public String toString() {
-		return "Category [Id=" + id + ", Name=" + name + ", Description=" + description + ", ListProducts="
-				+ getListProducts();
+		return "Category [Id=" + id + ", Name=" + name + ", Description=" + description + "]\n" +"ListProducts"
+				+"\n"+ getListProducts().toString()+ "\n";
+	}
+
+	public String showProduct() {
+		return "Category [Id=" + id + 
+				"ListProducts"+"\t\n"+ getListProducts();
 	}
 
 }
